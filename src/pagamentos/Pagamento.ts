@@ -10,6 +10,7 @@ export class Pagamento {
 		if (!Object.values(MetodoPagamento).includes(metodoPagamento)) {
 			throw new Error("Método de pagamento inválido.");
 		}
+
 		pedido.confirmarPagamento();
 		console.log(
 			`Pagamento de R$${valor.toFixed(

@@ -3,7 +3,7 @@
 	"module": "index.ts",
 	"type": "module",
 	"scripts": {
-		"test": "jest"
+		"test": "jest --collectCoverage"
 	},
 	"devDependencies": {
 		"@jest/globals": "^29.7.0",

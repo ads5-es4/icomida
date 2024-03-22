@@ -8,8 +8,8 @@ describe("descricao geral", () => {
 	test("meu primeiro test legal", () => {
 		// configuração
 		let var1 = 2;
-		let var2 = 3;
-		let resultadoEsparado = 5;
+		let var2 = 4;
+		let resultadoEsparado = 6;
 
 		// execução
 		let soma = sum(var1, var2);
