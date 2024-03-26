@@ -5,6 +5,9 @@ export class Cliente {
 		public telefone: string,
 		public pontosFidelidade: number = 0
 	) {
+		this.verificarNome();
+		this.verificarEndereco();
+
 		if (!this.verificarTelefone()) {
 			throw new Error("Número de telefone inválido.");
 		}
@@ -22,5 +25,15 @@ export class Cliente {
 	verificarTelefone(): boolean {
 		const regexTelefone = /^\d{10,11}$/; // Telefone deve conter entre 10 e 11 dígitos
 		return regexTelefone.test(this.telefone);
+	}
+	verificarNome() {
+		if (this.nome.length <= 0) throw new Error("Não foi informado nome");
+	}
+
+	verificarEndereco() {
+		if (this.endereco.length <= 0)
+			throw new Error("Não foi informado endereco");
+		// const regexEndereco = /^[a-zA-Z0-9\s]+$/; // Endereço deve conter letras, números e espaços
+		// return regexEndereco.test(this.endereco);
 	}
 }
