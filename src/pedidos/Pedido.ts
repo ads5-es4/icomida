@@ -28,6 +28,9 @@ export class Pedido {
 	}
 
 	confirmarPagamento() {
+		if (this.itens.length === 0) {
+		}
+
 		this.pagamentoConfirmado = true;
 	}
 
