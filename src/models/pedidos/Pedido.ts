@@ -1,8 +1,9 @@
+import { PedidoSemItensError } from "../../errors/PedidoSemItens.error";
 import { Cliente } from "../usuarios/Cliente";
 import { ItemMenu } from "./ItemMenu";
 
 export class Pedido {
-	itens: ItemMenu[] = [];
+	private itens: ItemMenu[] = [];
 	total: number = 0;
 	pagamentoConfirmado: boolean = false;
 	entregue: boolean = false;
@@ -44,13 +45,13 @@ export class Pedido {
 		return true; // Supondo que todos os itens estão disponíveis
 	}
 
-	temItens(): boolean {
+	get temItens(): boolean {
 		return this.itens.length > 0;
 	}
 
-	lancarErroSePedidoSemItens() {
-		if (!this.temItens()) {
-			throw new Error("Pedido sem Itens");
+	private lancarErroSePedidoSemItens() {
+		if (!this.temItens) {
+			throw new PedidoSemItensError();
 		}
 	}
 }

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@jest/globals";
-import { Cliente } from "../../src/usuarios/Cliente";
+import { Cliente } from "../../../src/models/usuarios/Cliente";
 
 describe("O Cliente", () => {
 	test("deve ser criado, quando valores corretos forem passados", () => {

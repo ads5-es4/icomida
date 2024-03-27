@@ -1,7 +1,7 @@
 import { describe, expect, it, test } from "@jest/globals";
-import { ItemMenu } from "../../src/pedidos/ItemMenu";
-import { Pedido } from "../../src/pedidos/Pedido";
-import { Cliente } from "../../src/usuarios/Cliente";
+import { ItemMenu } from "../../../src/models/pedidos/ItemMenu";
+import { Pedido } from "../../../src/models/pedidos/Pedido";
+import { Cliente } from "../../../src/models/usuarios/Cliente";
 
 describe("O Pedido", () => {
 	test("deve adicionar itens", () => {
