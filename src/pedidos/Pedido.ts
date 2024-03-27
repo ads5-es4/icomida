@@ -28,10 +28,15 @@ export class Pedido {
 	}
 
 	confirmarPagamento() {
-		if (this.itens.length === 0) {
-		}
+		this.lancarErroSePedidoSemItens();
 
 		this.pagamentoConfirmado = true;
+	}
+
+	marcarComoEntregue() {
+		this.lancarErroSePedidoSemItens();
+
+		this.entregue = true;
 	}
 
 	verificarDisponibilidadeItem(item: ItemMenu): boolean {
@@ -39,7 +44,13 @@ export class Pedido {
 		return true; // Supondo que todos os itens estão disponíveis
 	}
 
-	marcarComoEntregue() {
-		this.entregue = true;
+	temItens(): boolean {
+		return this.itens.length > 0;
+	}
+
+	lancarErroSePedidoSemItens() {
+		if (!this.temItens()) {
+			throw new Error("Pedido sem Itens");
+		}
 	}
 }

@@ -1,4 +1,4 @@
-import { describe, expect, test } from "@jest/globals";
+import { describe, expect, it, test } from "@jest/globals";
 import { ItemMenu } from "../../src/pedidos/ItemMenu";
 import { Pedido } from "../../src/pedidos/Pedido";
 import { Cliente } from "../../src/usuarios/Cliente";
@@ -46,5 +46,15 @@ describe("O Pedido", () => {
 		let pedidoSemItens = () => pedido.confirmarPagamento();
 
 		expect(pedidoSemItens).toThrowError("Pedido sem Itens");
+	});
+
+	it("deve confirmar pagamento", () => {
+		let pedido = new Pedido(new Cliente("nome", "email", "1234567890"));
+		let itemMenu01 = new ItemMenu("Hamburguer", "descricao", 15.0);
+		pedido.adicionarItem(itemMenu01);
+
+		pedido.confirmarPagamento();
+
+		expect(pedido.pagamentoConfirmado).toBeTruthy();
 	});
 });
