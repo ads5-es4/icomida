@@ -1,4 +1,4 @@
-import { Pedido } from "../models/pedidos/Pedido";
+import { Pedido } from "../pedidos/Pedido";
 import { Entregador } from "./Entregador";
 
 export class Cozinha {

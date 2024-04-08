@@ -10,6 +10,10 @@ export class Pedido {
 
 	constructor(public cliente: Cliente) {}
 
+	get id() {
+		return 1;
+	}
+
 	adicionarItem(item: ItemMenu) {
 		if (this.itens.length >= 5) {
 			// Restrição de até 5 itens por pedido

@@ -57,4 +57,18 @@ describe("O Pedido", () => {
 
 		expect(pedido.pagamentoConfirmado).toBeTruthy();
 	});
+
+	test("deve conter um identificador", () => {
+		let pedido = new Pedido(new Cliente("nome", "email", "1234567890"));
+
+		expect(pedido.id).toBe(1);
+	});
+
+	test("se nao tiver identificador, deve lancar erro PedidoNaoIdentificado", () => {
+		let pedido = new Pedido(new Cliente("nome", "email", "1234567890"));
+
+		let pedidoNaoIdentificado = () => pedido.id;
+
+		expect(pedidoNaoIdentificado).toThrowError("Pedido Nao Identificado");
+	});
 });
