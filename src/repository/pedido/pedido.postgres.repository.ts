@@ -1,19 +1,15 @@
-import { Pool } from "pg"; // Import the 'Pool' class from the 'pg' module
-import { Pedido } from "../models/pedidos/Pedido";
+import { Pool } from "pg";
+import { Pedido } from "../../models/pedidos/Pedido";
+import { getDatabase } from "../database";
 import { PedidoRepository } from "./pedido.repository";
 
 export class PedidoPostgresRepository implements PedidoRepository<Pedido> {
 	private pool: Pool;
 
 	constructor() {
-		this.pool = new Pool({
-			database: "restaurante",
-			user: "postgres",
-			host: "localhost",
-			password: "postgres",
-			port: 5432,
-		});
+		this.pool = getDatabase();
 	}
+
 	async get(id: number): Promise<Pedido> {
 		const result = await this.pool.query(
 			"SELECT * FROM pedidos WHERE id = $1",
@@ -26,14 +22,16 @@ export class PedidoPostgresRepository implements PedidoRepository<Pedido> {
 
 		return result.rows[0] as Pedido;
 	}
+
 	async getAll(): Promise<Pedido[]> {
 		const result = await this.pool.query("SELECT * FROM pedidos");
 
 		return result.rows as Pedido[];
 	}
+
 	async add(item: Pedido): Promise<Pedido> {
 		const result = await this.pool.query(
-			"INSERT INTO pedidos (cliente_id, total, pagamento_confirmado, entregue) VALUES ($1, $2, $3, $4)",
+			"INSERT INTO pedidos (cliente_id, total, pagamento_confirmado, entregue) VALUES ($1, $2, $3, $4) RETURNING id",
 			[
 				item.cliente.id,
 				item.total,

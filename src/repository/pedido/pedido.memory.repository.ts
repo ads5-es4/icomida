@@ -1,4 +1,4 @@
-import { Pedido } from "../models/pedidos/Pedido";
+import { Pedido } from "../../models/pedidos/Pedido";
 import { PedidoRepository } from "./pedido.repository";
 
 export class PedidoMemoryRepository implements PedidoRepository<Pedido> {

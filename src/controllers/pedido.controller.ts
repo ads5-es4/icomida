@@ -1,6 +1,6 @@
 import { ItemMenu } from "../models/pedidos/ItemMenu";
 import { Pedido } from "../models/pedidos/Pedido";
-import { PedidoRepository } from "../repository/pedido.repository";
+import { PedidoRepository } from "../repository/pedido/pedido.repository";
 
 export class PedidoController {
 	constructor(public repository: PedidoRepository<Pedido>) {}

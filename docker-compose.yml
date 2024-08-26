@@ -1,0 +1,37 @@
+services:
+    app:
+        build: .
+        ports:
+            - "3000:3000"
+        depends_on:
+            - postgres
+            - sqlite
+        env_file:
+            - .env
+
+    postgres:
+        image: postgres:latest
+        environment:
+            POSTGRES_DB: ${POSTGRES_DB}
+            POSTGRES_USER: ${POSTGRES_USER}
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+        ports:
+            - "5432:5432"
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+            - ./init_postgres.sh:/docker-entrypoint-initdb.d/init_postgres.sh
+
+    sqlite:
+        image: nouchka/sqlite3
+        volumes:
+            - ./data:/data
+            - ./init_sqlite.sql:/usr/local/bin/init_sqlite.sql
+        entrypoint:
+            [
+                "sh",
+                "-c",
+                "sqlite3 /data/icomida.db < /usr/local/bin/init_sqlite.sql && tail -f /dev/null",
+            ]
+
+volumes:
+    postgres_data:

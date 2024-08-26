@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS pedidos (
+    id INTEGER PRIMARY KEY,
+    descricao TEXT NOT NULL,
+    valor REAL NOT NULL
+);
