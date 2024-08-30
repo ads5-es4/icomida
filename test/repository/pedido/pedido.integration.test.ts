@@ -5,7 +5,7 @@ import {
 	describe,
 	expect,
 	it,
-} from "bun:test";
+} from "@jest/globals";
 import { Pool } from "pg";
 import { Pedido } from "../../../src/models/pedidos/Pedido";
 import { Cliente } from "../../../src/models/usuarios/Cliente";
