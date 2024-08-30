@@ -1,7 +1,6 @@
 import { config } from "dotenv";
 import { Pool } from "pg";
-import { open } from "sqlite";
-import sqlite3 from "sqlite3";
+import sqlite3, { Database } from "sqlite3";
 
 // Carregar variáveis de ambiente do arquivo .env
 config();
@@ -11,10 +10,7 @@ let pool: Pool;
 
 export async function getDatabaseInFile(): Promise<sqlite3.Database> {
 	if (!db) {
-		db = await open({
-			filename: "./database.sqlite",
-			driver: sqlite3.Database,
-		});
+		db = new Database("database.sqlite");
 	}
 	return db;
 }

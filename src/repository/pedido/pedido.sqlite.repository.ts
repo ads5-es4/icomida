@@ -4,34 +4,59 @@ import { Pedido } from "../../models/pedidos/Pedido";
 import { PedidoRepository } from "./pedido.repository";
 
 export class PedidoSQLiteRepository implements PedidoRepository<Pedido> {
-	private db: Database;
+	private db!: Database;
 
 	constructor() {
-		this.db = getDatabaseInFile();
+		this.initializeDatabase();
 	}
 
-	async get(id: number): Promise<Pedido> {
-		const pedido = await this.db.get<Pedido>(
-			"SELECT * FROM pedidos WHERE id = ?",
-			id
-		);
-		if (!pedido) {
-			throw new Error("Pedido não encontrado.");
-		}
-		return pedido;
+	private async initializeDatabase() {
+		this.db = await getDatabaseInFile();
 	}
 
-	async getAll(): Promise<Pedido[]> {
-		const pedidos = await this.db.all<Pedido[]>("SELECT * FROM pedidos");
-		return pedidos;
+	get(id: number): Promise<Pedido> {
+		return new Promise((resolve, reject) => {
+			this.db.get(
+				"SELECT * FROM pedidos WHERE id = ?",
+				[id],
+				(err, row) => {
+					if (err) {
+						reject(err);
+					} else if (!row) {
+						reject(new Error("Pedido não encontrado."));
+					} else {
+						resolve(row as Pedido);
+					}
+				}
+			);
+		});
 	}
 
-	async add(pedido: Pedido): Promise<void> {
-		await this.db.run(
-			"INSERT INTO pedidos (id, descricao, valor) VALUES (?, ?, ?)",
-			pedido.id,
-			pedido.descricao,
-			pedido.valor
-		);
+	getAll(): Promise<Pedido[]> {
+		return new Promise((resolve, reject) => {
+			this.db.all("SELECT * FROM pedidos", (err, rows) => {
+				if (err) {
+					reject(err);
+				} else {
+					resolve(rows as Pedido[]);
+				}
+			});
+		});
+	}
+
+	add(pedido: Pedido): Promise<void> {
+		return new Promise((resolve, reject) => {
+			this.db.run(
+				"INSERT INTO pedidos (id, descricao, valor) VALUES (?, ?, ?)",
+				[pedido.id, pedido.pagamentoConfirmado, pedido.total],
+				(err) => {
+					if (err) {
+						reject(err);
+					} else {
+						resolve();
+					}
+				}
+			);
+		});
 	}
 }

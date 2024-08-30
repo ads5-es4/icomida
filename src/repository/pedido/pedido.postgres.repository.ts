@@ -1,13 +1,17 @@
 import { Pool } from "pg";
+import { getDatabase } from "../../databases/database";
 import { Pedido } from "../../models/pedidos/Pedido";
-import { getDatabase } from "../database";
 import { PedidoRepository } from "./pedido.repository";
 
 export class PedidoPostgresRepository implements PedidoRepository<Pedido> {
-	private pool: Pool;
+	private pool: Pool = new Pool();
 
 	constructor() {
-		this.pool = getDatabase();
+		this.initializePool();
+	}
+
+	private async initializePool() {
+		this.pool = await getDatabase();
 	}
 
 	async get(id: number): Promise<Pedido> {
@@ -29,7 +33,7 @@ export class PedidoPostgresRepository implements PedidoRepository<Pedido> {
 		return result.rows as Pedido[];
 	}
 
-	async add(item: Pedido): Promise<Pedido> {
+	async add(item: Pedido): Promise<void> {
 		const result = await this.pool.query(
 			"INSERT INTO pedidos (cliente_id, total, pagamento_confirmado, entregue) VALUES ($1, $2, $3, $4) RETURNING id",
 			[
@@ -43,8 +47,5 @@ export class PedidoPostgresRepository implements PedidoRepository<Pedido> {
 		if (result.rowCount === 0) {
 			throw new Error("Erro ao inserir pedido.");
 		}
-
-		item.id = result.rows[0].id;
-		return item;
 	}
 }

@@ -1,7 +1,7 @@
 export interface Repository<T> {
-	get(id: number): T;
+	get(id: number): Promise<T>;
 
-	getAll(): T[];
+	getAll(): Promise<T[]>;
 
-	add(item: T): void;
+	add(item: T): Promise<void>;
 }
