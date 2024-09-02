@@ -6,9 +6,12 @@
 		"start": "bun run src/index.ts",
 		"docker:build": "docker-compose up --build",
 		"docker:down": "docker-compose down",
-		"test": "jest --collectCoverage"
+		"test": "jest --collectCoverage",
+		"test:cucumber": "cucumber-js -p default"
 	},
 	"devDependencies": {
+		"@cucumber/cucumber": "^10.9.0",
+		"@cucumber/pretty-formatter": "^1.0.1",
 		"@jest/globals": "^29.7.0",
 		"@types/jest": "^29.5.12",
 		"@types/jsdom": "^21.1.6",
